@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: install ffmpeg
-        run: sudo add-apt-repository ppa:ubuntuhandbook1/ffmpeg7 -y > /dev/null;sudo apt update -qq > /dev/null;sudo apt install ffmpeg -y -qq > /dev/null
-      - name: live stream
-        run: ${{ github.event.inputs.ffmpegcom }}
+      - name: Run FFmpeg command using Docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace jrottenberg/ffmpeg:latest ${{ github.event.inputs.ffmpegcom }}
